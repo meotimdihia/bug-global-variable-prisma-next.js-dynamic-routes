@@ -6,13 +6,16 @@ import { PrismaClient } from "@prisma/client";
 // Learn more:
 // https://pris.ly/d/help/next-js-best-practices
 
-const globalForPrisma = globalThis as unknown as {
+const globalForPrisma = global as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+console.log(`this shouldn't be undefined: ${globalForPrisma.prisma}`);
+
+const prisma = globalForPrisma.prisma ?? new PrismaClient()
 
 if (process.env.NODE_ENV !== "production") {
-  console.log("test");
   globalForPrisma.prisma = prisma;
 }
+
+export default prisma
