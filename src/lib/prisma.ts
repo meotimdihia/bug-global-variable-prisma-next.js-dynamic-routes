@@ -10,9 +10,12 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+console.log(`this shouldn't be undefined: ${globalForPrisma.prisma}`);
+
+const prisma = globalForPrisma.prisma ?? new PrismaClient()
 
 if (process.env.NODE_ENV !== "production") {
-  console.log("test");
   globalForPrisma.prisma = prisma;
 }
+
+export default prisma
